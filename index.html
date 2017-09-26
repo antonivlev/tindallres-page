@@ -1,137 +1,158 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- D3, the library used in the animations -->		
 		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<script src="http://underscorejs.org/underscore-min.js"></script>
+		
+		<!-- the font for all the text, gets downloaded from google fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet">
-
-		<style>
-			svg {
-				display: block;
-				margin: auto;
-			}		
-		</style>
+		
 
 		<style type="text/css">
-			.st0{fill:none;stroke:#CCCCCC;stroke-width:7;stroke-linecap:round;stroke-miterlimit:10;}
-			.st1{fill:none;stroke:#CCCCCC;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-			.st2{fill:none;stroke:#CCCCCC;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10;}
-			.st3{fill:none;stroke:#6792E0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-			.st4{fill:#032A6F;}
-			.st5{fill:#FF6500;}
-			.st6{fill:#CCCCCC;}
-			.st7{font-family:'Droid Sans Mono';}
-			.st8{font-size:20px;}
-			.st9{font-size:47.6976px;}
-			.st10{display:none;}
+			svg {
+				position: absolute;
+			}
+
+			.river-line {
+				fill:none;
+				stroke:#6792E0;
+				stroke-width:3;
+				stroke-linecap:round;
+				stroke-linejoin:round;
+				stroke-miterlimit:10;
+			}
+
+			#tinres {
+				position: absolute;
+			}
+
+			.road-lines {
+				fill:none;
+				stroke:#CCCCCC;
+				stroke-width:7;
+				stroke-linecap:round;
+				stroke-miterlimit:10;
+			}
+
+			.road-text {
+				fill:#CCCCCC;
+				font-family:'Droid Sans Mono';
+				font-size:20px;
+			}
+
+			.town-text {
+				fill:#032A6F;
+				font-family:'Droid Sans Mono';
+				font-size:20px;					
+			}
+
+			.hq-text {
+				fill:#FF6500;
+				font-family:'Droid Sans Mono';
+			}
+
+			.scrolling-text {
+				fill:#032A6F;
+				font-family:'Droid Sans Mono';					
+			}
+
+			circle {
+				fill:#032A6F;
+			}
+			
+			#henley {
+				fill:#FF6500;
+			}
 		</style>	
 	</head>
-	
-<!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="962px" height="793px" viewBox="155 39 962 793">
- -->
 
 	<body>
-		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1343.1px" height="1147px" viewBox="192 -300 1343.1 1000">
-			<g id="Roads">
-				<polyline id="m25" class="st0" points="1305.7,192.4 1243.6,193 1171.6,247.1 1171.6,391.1 1243.6,463.1 1314.4,464.3 	"/>
-				<line id="a34" class="st1" x1="493.6" y1="-85.9" x2="493.6" y2="533.1"/>
-				<line id="m4" class="st2" x1="1172.1" y1="337.1" x2="389.1" y2="337.1"/>
-				<polyline id="m40" class="st1" points="1203.1,223.6 790,222.1 493.7,-74.3 	"/>
-				<line id="m3_1_" class="st1" x1="1197.4" y1="421.4" x2="688.8" y2="611.1"/>
+		<svg x="0px" y="0px" width="1000" viewBox="202.2 764.4 965.8 783.5">
+			<g id="river">
+				<polyline id="river_4_" class="river-line" points="310.9,961.8 340.7,961.8 340.5,986.4 370.3,1016.2 364.3,1010.2 393.3,1039 
+					393.3,1065.7 379.8,1079.3 355.3,1079.3 345.3,1089.1 345.3,1120.2 344.8,1133.7 362,1134.3 371,1125.3 382.3,1125.3 382.3,1133.7 
+					392,1143.3 409.3,1143.3 409.3,1157.3 425,1157.3 438.6,1143.8 450.9,1156.1 427.4,1179.8 427.4,1199.1 438.4,1210.2 448.1,1200.4 
+					465.8,1200.4 474.8,1209.4 454.3,1229.9 454.3,1253.2 471.3,1253.6 471.3,1276.4 490.3,1276.4 499.6,1269.5 562.5,1269.2 
+					562.8,1286.4 599.7,1286.4 646.7,1240.2 646.7,1240.3 657,1240.3 670.5,1253.3 679.7,1244 688.5,1244.1 688.2,1258.5 699.1,1269.3 
+					731,1237.3 747.4,1237.3 747.4,1226.5 767.5,1206.3 791.9,1206.3 805.4,1220.5 805.4,1244.2 819.1,1257.7 860,1257.2 871.5,1268.4 
+					887.7,1268.4 897.8,1258.3 933,1258.3 968.9,1293.5 969,1326.6 1000,1326.3 1031,1326.3 1031,1339.7 1043.2,1351.9 1072.5,1351.9 
+					1072.1,1326 1113.1,1285 1159.1,1285 	"/>
 			</g>
-			<g id="River">
-				<path id="river_2_" class="st3" d="M528.8,60.9l29,28.8v26.7L544.3,130h-24.5l-10,9.8v31.1l-0.5,13.5l17.2,0.6l9-9h11.3v8.4
-					l9.7,9.6h17.3v14h15.7l13.6-13.5l12.3,12.3l-23.5,23.7v19.3l11,11.1l9.7-9.8h17.7l9,9l-20.5,20.5v23.3l17,17v26.8l15.1,15.1
-					l14.5-14.6l-0.3-11.1l17.3-18H746l18.2,18h25.7v-8.6c0,0,17-18.1,18-18.1c2,0,0-19.4,0-19.4h13.6l13.5,13l9.2-9.3l8.8,0.1
-					l-0.3,14.4l10.9,10.8l31.9-32h16.4v-10.8L932,257h24.4l13.5,14.2v23.7l13.7,13.5l-11.3,11.4l11.4,11.3l37.7,33.6l117.3-0.2
-					l16.3-14.4h25.8h23l34.5-34.3"/>
+			<g id="roads">
+				<line id="a34_1_" class="road-lines" x1="331.3" y1="860.7" x2="331.2" y2="1490.2"/>
+				<line id="m4_1_" class="road-lines" x1="1009.3" y1="1316.9" x2="297.1" y2="1316.9"/>
+				<polyline id="m3_2_" class="road-lines" points="1023.6,1371.7 886.3,1508.5 492.5,1509.6 	"/>
+				<polyline id="m40_1_" class="road-lines" points="1051.1,1175.9 655.5,1174.4 331.4,878 	"/>
+				<polyline class="road-lines" points="1159.1,1158.9 1068.1,1158.9 1009.5,1217.4 	"/>
+				<polyline class="road-lines" points="1159.1,1416.3 1068.1,1416.3 1009.5,1357.7 1009.5,1217.4 	"/>
 			</g>
-			<g id="Circles">
-				<circle id="oxford" class="st4" cx="528.8" cy="60.9" r="18"/>
-				<circle id="marlow" class="st4" cx="943" cy="258.1" r="9"/>
-				<circle id="maidenhead" class="st4" cx="980" cy="328.1" r="9"/>
-				<circle id="bracknell" class="st4" cx="1009.6" cy="466.6" r="9"/>
-				<circle id="wokingham" class="st4" cx="905" cy="442.3" r="9"/>
-				<circle id="basingstoke" class="st4" cx="713.7" cy="557.5" r="9"/>
-				<circle id="reading" class="st4" cx="764.2" cy="337.1" r="9"/>
-				<circle id="henley" class="st5" cx="808.1" cy="291" r="9"/>
-				<circle id="abingdon" class="st4" cx="512.2" cy="140.4" r="9"/>
-				<circle id="didcot" class="st4" cx="521.2" cy="273.2" r="9"/>
-				<circle id="newbury" class="st4" cx="477.7" cy="412.4" r="9"/>
-				<circle id="bicester" class="st4" cx="493.6" cy="-74.3" r="9"/>
-				<circle id="slough" class="st4" cx="1096" cy="364.2" r="18"/>
-				<circle id="london" class="st4" cx="1238.1" cy="305.6" r="36"/>
-				<circle id="hwycombe" class="st4" cx="940.6" cy="183.8" r="9"/>
+			<g id="circles">
+				<circle id="oxford" class="st2" cx="363.5" cy="1006.4" r="18"/>
+				<circle id="marlow" class="st2" cx="776.3" cy="1207.8" r="9"/>
+				<circle id="maidenhead" class="st2" cx="813.3" cy="1255.3" r="9"/>
+				<circle id="bracknell" class="st2" cx="842.9" cy="1416.3" r="9"/>
+				<circle id="wokingham" class="st2" cx="738.3" cy="1392" r="9"/>
+				<circle id="basingstoke" class="st2" cx="547" cy="1509.6" r="9"/>
+				<circle id="reading" class="st2" cx="595.2" cy="1316.9" r="9"/>
+				<circle id="henley" class="st3" cx="643" cy="1243.2" r="9"/>
+				<circle id="abingdon" class="st2" cx="345.5" cy="1090.1" r="9"/>
+				<circle id="didcot" class="st2" cx="354.5" cy="1222.9" r="9"/>
+				<circle id="newbury" class="st2" cx="311" cy="1362.1" r="9"/>
+				<circle id="bicester" class="st2" cx="331.4" cy="878" r="9"/>
+				<circle id="slough" class="st2" cx="952.2" cy="1276.4" r="18"/>
+				<circle id="london" class="st2" cx="1108.2" cy="1287.2" r="39.5"/>
+				<circle id="hwycombe" class="st2" cx="767.3" cy="1133.5" r="9"/>
 			</g>
-			<g id="Text">
-				<g id="roads">
-					<text id="XMLID_55_" transform="matrix(1 0 0 1 374.1199 328.0777)" class="st6 st7 st8">M4</text>
-					<text id="XMLID_43_" transform="matrix(1 0 0 1 1275.4199 499.0782)" class="st6 st7 st8">M25</text>
-					<text id="XMLID_40_" transform="matrix(1 0 0 1 688.8207 634.8105)" class="st6 st7 st8">M3</text>
-					<text id="XMLID_38_" transform="matrix(1 0 0 1 1030.2169 213.078)" class="st6 st7 st8">M40</text>
-					<text id="XMLID_36_" transform="matrix(1 0 0 1 1258.5383 167.9777)" class="st6 st7 st8">M25</text>
-					<text id="XMLID_34_" transform="matrix(1 0 0 1 448.4118 3.855)" class="st6 st7 st8">A34</text>
-					<text id="XMLID_33_" transform="matrix(1 0 0 1 477.7047 557.5177)" class="st6 st7 st8">A34</text>
-				</g>
-				<g id="towns">
-					<text id="XMLID_78_" transform="matrix(1 0 0 1 503.2203 35.1349)" class="st4 st7 st8">Oxford</text>
-					<text id="XMLID_2_" transform="matrix(1 0 0 1 503.2202 257.8869)" class="st4 st7 st8">Didcot</text>
-					<text id="XMLID_5_" transform="matrix(1 0 0 1 389.0998 140.3645)" class="st4 st7 st8">Abingdon</text>
-					<text transform="matrix(0.9328 0 0 1 682.4561 257.8871)" class="st5 st7 st8">Henley-on-Thames</text>
-					<text transform="matrix(0.9328 0 0 1 755.2148 281.8871)" class="st5 st7 st8">HQ!</text>
-					<text id="XMLID_76_" transform="matrix(1 0 0 1 1207.5725 264.1547)" class="st4 st7 st8">London</text>
-					<text id="XMLID_75_" transform="matrix(1 0 0 1 871.0198 167.9779)" class="st4 st7 st8">High Wycombe</text>
-					<text id="XMLID_28_" transform="matrix(1 0 0 1 509.2068 -74.2539)" class="st4 st7 st8">Bicester</text>
-					<text id="XMLID_74_" transform="matrix(1 0 0 1 853.0199 427.206)" class="st4 st7 st8">Wokingham</text>
-					<text id="XMLID_4_" transform="matrix(1 0 0 1 651.8676 538.5719)" class="st4 st7 st8">Basingstoke</text>
-					<text id="XMLID_73_" transform="matrix(1 0 0 1 959.4059 453.0295)" class="st4 st7 st8">Bracknell</text>
-					<text id="XMLID_72_" transform="matrix(1 0 0 1 773.215 364.1995)" class="st4 st7 st8">Reading</text>
-					<text id="XMLID_71_" transform="matrix(1 0 0 1 383.8032 400.2058)" class="st4 st7 st8">Newbury</text>
-					<text id="XMLID_70_" transform="matrix(1 0 0 1 1057.5247 403.3782)" class="st4 st7 st8">Slough</text>
-					<text id="XMLID_6_" transform="matrix(1 0 0 1 952.02 249.078)" class="st4 st7 st8">Marlow</text>
-					<text id="XMLID_8_" transform="matrix(1 0 0 1 992.2844 328.0771)" class="st4 st7 st8">Maidenhead</text>
-				</g>
-				
-				<g id="top-text">
-					<text id="front-text1" transform="matrix(1.0237 0 0 1 370.0547 -136.2306)" text-anchor="start" fill="#032A6F" font-family="Droid Sans Mono" font-size="50px" style="opacity: 0">Tindall Resourcing Ltd</text>
-					<text id="front-text2" transform="matrix(1.0237 0 0 1 370.0547 -136.2306)" text-anchor="start" fill="#032A6F" font-family="Droid Sans Mono" font-size="30px" style="opacity: 0">Experts in IT and Software Development recruitment</text>
-					<text id="front-text3" transform="matrix(1.0237 0 0 1 370.0547 -136.2306)" text-anchor="start" fill="#032A6F" font-family="Droid Sans Mono" font-size="30px" style="opacity: 0">Oxfordshire, Berkshire, Thames Valley and London</text>
-				</g>
+			<g id="road-text_1_">
+				<text id="XMLID_26_" transform="matrix(1 0 0 1 266.3985 1324.6566)" class="road-text">M4</text>
+				<text id="XMLID_25_" transform="matrix(1 0 0 1 1125.1427 1407.2623)" class="road-text">M25</text>
+				<text id="XMLID_24_" transform="matrix(1 0 0 1 496.6756 1530.7729)" class="road-text">M3</text>
+				<text id="XMLID_23_" transform="matrix(1 0 0 1 863.4051 1168.1929)" class="road-text">M40</text>
+				<text id="XMLID_22_" transform="matrix(1 0 0 1 1125.1425 1150.9954)" class="road-text">M25</text>
+				<text id="XMLID_21_" transform="matrix(1 0 0 1 310.8926 852.44)" class="road-text">A34</text>
+				<text id="XMLID_20_" transform="matrix(1 0 0 1 310.8928 1512.1443)" class="road-text">A34</text>
 			</g>
-
-			<g id="images">	
-				<image style="overflow:visible;" width="353" height="122" xlink:href="tinres.jpg"  transform="matrix(0.9484 0 0 -0.9491 1004.6994 -201.8988)">
-				</image>		
-				<image style="overflow:visible;" width="168" height="31" xlink:href="itspeople.jpg"  transform="matrix(1.078 0 0 -1.0684 370.0547 -201.8988)">
-				</image>
+			<g id="top-text">
+				<text id="front-text1" style="opacity:100; font-size: 50px;" transform="matrix(1.0237 0 0 1 213.3011 813.9284)" class="scrolling-text">Tindall Resourcing Ltd</text>
+				<text id="front-text2" style="opacity:0; font-size: 40px;" transform="matrix(1.0237 0 0 1 213.3011 813.9284)" class="scrolling-text">Experts in IT and Software Development recruitment</text>
+				<text id="front-text3" style="opacity:0; font-size: 30px;" transform="matrix(1.0237 0 0 1 213.3011 813.9284)" class="scrolling-text">Oxfordshire, Berkshire, Thames Valley and London</text>
+			</g>
+			<g id="town-text_1_">
+				<text id="XMLID_19_" transform="matrix(1 0 0 1 383.6244 1024.4358)" class="town-text">Oxford</text>
+				<text id="XMLID_18_" transform="matrix(1 0 0 1 363.4843 1248.7805)" class="town-text">Didcot</text>
+				<text id="XMLID_17_" transform="matrix(1 0 0 1 354.4843 1110.2223)" class="town-text">Abingdon</text>
+				<text transform="matrix(0.9328 0 0 1 511.9544 1209.6307)" class="hq-text">Henley-on-Thames</text>
+				<text transform="matrix(0.9328 0 0 1 584.7133 1233.6307)" class="hq-text">HQ!</text>
+				<text id="XMLID_16_" transform="matrix(1 0 0 1 1072.4988 1238.3604)" class="town-text">London</text>
+				<text id="XMLID_15_" transform="matrix(1 0 0 1 700.5181 1119.7219)" class="town-text">High Wycombe</text>
+				<text id="XMLID_14_" transform="matrix(1 0 0 1 342.918 877.9622)" class="town-text">Bicester</text>
+				<text id="XMLID_13_" transform="matrix(1 0 0 1 682.0003 1371.7344)" class="town-text">Wokingham</text>
+				<text id="XMLID_12_" transform="matrix(1 0 0 1 490.3654 1493.3158)" class="town-text">Basingstoke</text>
+				<text id="XMLID_11_" transform="matrix(1 0 0 1 793.6415 1400.9623)" class="town-text">Bracknell</text>
+				<text id="XMLID_10_" transform="matrix(1 0 0 1 553.167 1344.7675)" class="town-text">Reading</text>
+				<text id="XMLID_9_" transform="matrix(1 0 0 1 213.3014 1351.9498)" class="town-text">Newbury</text>
+				<text id="XMLID_7_" transform="matrix(1 0 0 1 863.4052 1301.2498)" class="town-text">Slough</text>
+				<text id="XMLID_3_" transform="matrix(1 0 0 1 822.2843 1246.2631)" class="town-text">Maidenhead</text>
+				<text id="XMLID_1_" transform="matrix(1 0 0 1 785.2843 1200.8224)" class="town-text">Marlow</text>
 			</g>
 		</svg>
 
 		
 		<script>
-			var c = d3.selectAll("circle:not(#henley)");
-
-			var text1 = "Tindall Resourcing Ltd";
-			var text2 = "Experts in IT and Software Development recruitment";
-			var text3 = "Oxfordshire, Berkshire, Thames Valley and London";
 			var stay_dur = 1500;
 			var trans_dur = 700;
-
-			var delays = _.range(c.nodes().length).map( () => Math.random()*1000 );
-			c.data(delays);
-			//console.log(delays)
-				
+			
 			function start_1() {
 				d3.select("#top-text").select("#front-text1")
 					.transition()
 						.duration(trans_dur)
 						.style("opacity", 1)
 					.transition()
-					 	.duration(stay_dur)
+						.duration(stay_dur)
 					.transition()
-					 	.duration(trans_dur)
-					 	.style("opacity", 0)
-					 	.on("end", start_2);																
+						.duration(trans_dur)
+						.style("opacity", 0)
+						.on("end", start_2);																
 			}
 
 			function start_2() {
@@ -140,11 +161,11 @@
 						.duration(trans_dur)
 						.style("opacity", 1)
 					.transition()
-					 	.duration(stay_dur)
+						.duration(stay_dur)
 					.transition()
-					 	.duration(trans_dur)
-					 	.style("opacity", 0)
-					 	.on("end", start_3);																
+						.duration(trans_dur)
+						.style("opacity", 0)
+						.on("end", start_3);															
 			}
 
 			function start_3() {
@@ -153,41 +174,39 @@
 						.duration(trans_dur)
 						.style("opacity", 1)
 					.transition()
-					 	.duration(stay_dur)
+						.duration(stay_dur)
 					.transition()
-					 	.duration(trans_dur)
-					 	.style("opacity", 0)
-					 	.on("end", start_1);																
-			}
-
-
-			function repeat_flicker() {
-				c.transition()
-					.delay(function(d, i) {	
-						console.log(d);
-						return d 
-					})
-					.duration(2000)
-					.style("fill", "#032A6F")		
-				.transition()
-					.duration(2000)
-					.style("fill", "#6A7EC7")
-				// .on("end", repeat_flicker);					
+						.duration(trans_dur)
+						.style("opacity", 0)
+						.on("end", start_1);																
 			}
 
 			function repeat_henley() {
+				//#FF6500 #E6E6E6
 				d3.select("#henley")
 					.transition()
 						.duration(500)
-						.style("fill", "#FF6500")		
+						.style("fill", "red")		
 					.transition()
 						.duration(500)
-						.style("fill", "#E6E6E6")
+						.style("fill", "#FF6500")
 					.on("end", repeat_henley);	
 			}
 
+			d3.selectAll("circle:not(#henley)").transition()
+				.delay(function(d, i) { return Math.random()*i*150; })
+				.on("start", function repeat() {
+					d3.active(this)
+						.style("fill", "#032A6F")
+						.duration(2000)
+				  	.transition()
+						.style("fill", "#6A7EC7")
+						.duration(2000)
+					.transition()
+						.on("start", repeat);
+				});
+
 			repeat_henley();
-			repeat_flicker();
 			start_1();
 		</script>
 	</body>
